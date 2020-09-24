@@ -14,16 +14,21 @@ public class MetroTicketValidatorUnitTest {
     @Test(expected = TimeExpiredException.class)
     public void timeExpiredYearTest() {
         new MetroTicketValidator().validate(
-                "0643xxx811281305",
-                "0845xxx911281426");
+                "0643xxx8112181305",
+                "0845xxx9112181426");
     }
 
     @Test(expected = TimeExpiredException.class)
     public void timeExpiredMonthTest() {
         new MetroTicketValidator().validate(
-                "0643xxx911181305",
-                "0845xxx911281426");
+                "0643xxx9111181305",
+                "0845xxx9112181426");
     }
 
-
+    @Test(expected = TimeExpiredException.class)
+    public void timeExpiredDayTest() {
+        new MetroTicketValidator().validate(
+                "0643xxx9111171305",
+                "0845xxx9111181426");
+    }
 }

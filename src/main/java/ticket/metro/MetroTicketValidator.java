@@ -10,6 +10,8 @@ public class MetroTicketValidator {
     private static final int END_INDEX_OF_YEAR = 9;
     private static final int START_INDEX_OF_MONTH = 9;
     private static final int END_INDEX_OF_MONTH = 11;
+    private static final int START_INDEX_OF_DAY = 11;
+    private static final int END_INDEX_OF_DAY = 13;
 
     public void validate(String passengerTicket, String inspectorState) {
         checkMetroSignature(inspectorState);
@@ -25,8 +27,8 @@ public class MetroTicketValidator {
     private void checkTime(String passengerTicket, String inspectorState) {
         checkYear(passengerTicket, inspectorState);
         checkMonth(passengerTicket, inspectorState);
+        checkDay(passengerTicket, inspectorState);
     }
-
 
     private void checkYear(String passengerTicket, String inspectorState) {
         if (getYearFromValidationSequence(passengerTicket)
@@ -51,4 +53,14 @@ public class MetroTicketValidator {
         return Integer.parseInt(validationSequence.substring(START_INDEX_OF_MONTH, END_INDEX_OF_MONTH));
     }
 
+    private void checkDay(String passengerTicket, String inspectorState) {
+        if (getDayFromValidationSequence(passengerTicket)
+                != getDayFromValidationSequence(inspectorState)) {
+            throw new TimeExpiredException();
+        }
+    }
+
+    private int getDayFromValidationSequence(String validationSequence) {
+        return Integer.parseInt(validationSequence.substring(START_INDEX_OF_DAY, END_INDEX_OF_DAY));
+    }
 }
