@@ -1,10 +1,37 @@
 package ticket.metro;
 
+import ticket.metro.exception.TimeExpiredException;
 import ticket.metro.exception.VehicleIsNotMetroException;
 
 public class MetroTicketValidator {
-    public void validate(String inspectorState) {
-        if (!inspectorState.contains("xxx")) {
+
+    private static final String METRO_SIGNATURE = "xxx";
+    private static final int START_INDEX_OF_YEAR = 7;
+    private static final int END_INDEX_OF_YEAR = 9;
+
+    public void validate(String passengerTicket, String inspectorState) {
+        checkMetroSignature(inspectorState);
+        checkTime(passengerTicket, inspectorState);
+    }
+
+    private void checkTime(String passengerTicket, String inspectorState) {
+        checkYear(passengerTicket, inspectorState);
+    }
+
+    private void checkYear(String passengerTicket, String inspectorState) {
+        if (getYearFromValidationSequence(passengerTicket)
+                != getYearFromValidationSequence(inspectorState)) {
+            throw new TimeExpiredException();
+        }
+    }
+
+    private int getYearFromValidationSequence(String validationSequence) {
+        String yearString = validationSequence.substring(START_INDEX_OF_YEAR, END_INDEX_OF_YEAR);
+        return Integer.parseInt(String.valueOf(yearString.charAt(1) + yearString.charAt(0)));
+    }
+
+    private void checkMetroSignature(String inspectorState) {
+        if (!inspectorState.contains(METRO_SIGNATURE)) {
             throw new VehicleIsNotMetroException();
         }
     }
