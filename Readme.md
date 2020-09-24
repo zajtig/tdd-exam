@@ -1,2 +1,2 @@
 mvn clean verify sonar:sonar
-mvn pitest:mutationCoverage 
+mvn pitest:mutationCoverage  
