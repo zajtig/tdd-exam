@@ -1,13 +1,13 @@
 package ticket.metro;
 
-import org.junit.Assert;
 import org.junit.Test;
+import ticket.metro.exception.VehicleIsNotMetroException;
 
 public class MetroTicketValidatorUnitTest {
 
-    @Test
-    public void createTest() {
-        Assert.assertNotNull(new MetroTicketValidator());
+    @Test(expected = VehicleIsNotMetroException.class)
+    public void inspectorOnOtherVehicleTest() {
+        new MetroTicketValidator().validate("5422519041246");
     }
 
 }
