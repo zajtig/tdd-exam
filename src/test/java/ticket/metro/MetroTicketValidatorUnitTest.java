@@ -1,6 +1,7 @@
 package ticket.metro;
 
 import org.junit.Test;
+import ticket.metro.exception.OppositeDirectionOnTheSameLineException;
 import ticket.metro.exception.TimeExpiredException;
 import ticket.metro.exception.VehicleIsNotMetroException;
 
@@ -51,6 +52,13 @@ public class MetroTicketValidatorUnitTest {
         new MetroTicketValidator().validate(
                 "0643xxx9111181305",
                 "0845xxx9111181310");
+    }
+
+    @Test(expected = OppositeDirectionOnTheSameLineException.class)
+    public void directionOnTheSameLineTest() {
+        new MetroTicketValidator().validate(
+                "0643xxx9111181305",
+                "0644xxx9111181340");
     }
 
 }
